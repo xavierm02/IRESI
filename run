@@ -1,0 +1,5 @@
+#!/bin/sh
+cd src
+ocamlbuild main.byte --
+ocamlbuild -clean
+cd ..
