@@ -1,25 +1,33 @@
-(* ici, tu fais les calcules "en vrai". Oublis pas de reset l'enum avant de commencer a la lire *)
+open Counter;;
 
-let hash_add hash x =
-	if(Hashtbl.mem hash x) then 
-		Hashtbl.replace hash x ((Hashtbl.find hash x) + 1) 
-	else 
-		Hashtbl.add hash x 1
+let init () =
+  ref []
 ;;
 
-let enum_to_hash enum =
-	let h = Hashtbl.create (10) in
-	begin
-		Enum.reset enum;
-		Enum.iter (hash_add h) enum;
-		h
-	end
+exception Done;;
+
+let read counters host =
+  try
+    List.iter (fun counter ->
+      if counter.key = host then begin
+        counter.value <- counter.value + 1;
+        raise Done
+      end else ()
+    ) !counters;
+    counters := ({key = host; value = 1}) :: !counters
+  with
+    | Done -> ()
 ;;
 
-let f k x vx =
-	
+let read_all counters host_enum =
+  Enum.reset host_enum;
+  Enum.iter (read counters) host_enum
 ;;
 
-let hash_count h =
-	Hashtbl.iter (f k) h
+let count k host_enum =
+  let counters = init () in
+  read_all counters host_enum;
+  let counters_array = Array.of_list !counters in
+  Array.sort compare counters_array;
+  Array.sub counters_array 0 (min k (Array.length counters_array))
 ;;

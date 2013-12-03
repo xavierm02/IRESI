@@ -1,32 +1,4 @@
-type non_empty_counter = {
-  key: string;
-  mutable value: int
-};;
-
-type counter =
-  | Empty
-  | Value of non_empty_counter
-;;
-
-let make key value =
-  Value ({
-    key = key;
-    value = value
-  })
-;;
-
-let string_of_counter = function
-  | Value c -> c.key ^ " -> " ^ (string_of_int c.value)
-  | Empty -> "? -> 0"
-;;
-
-let string_of_counters counters =
-  (Array.fold_left
-    (fun acc counter -> acc ^ "  " ^ (string_of_counter counter) ^ "\n")
-    "[\n"
-    counters
-  ) ^ "]\n"
-;;
+open Counter;;
 
 let init k =
   Array.make k Empty
@@ -52,7 +24,7 @@ let read counters host =
       (fun index counter -> match counter with
         | Value c -> ()
         | Empty -> begin
-          counters.(index) <- make host 1;
+          counters.(index) <- Value {key = host; value = 1};
           raise Done
         end
       )
@@ -83,8 +55,18 @@ let read_all counters host_enum =
   Enum.iter (read counters) host_enum
 ;;
 
+let (|>) x f = f x;;
+
 let misra_gries k host_enum =
   let counters = init k in
   read_all counters host_enum;
-  counters
+  let non_empty_counters_list = ref [] in
+  Array.iter (fun counter ->
+    match counter with
+      | Value c -> non_empty_counters_list := c :: !non_empty_counters_list
+      | Empty -> ()
+  ) counters;
+  let non_empty_counters_array = Array.of_list !non_empty_counters_list in
+  Array.sort compare non_empty_counters_array;
+  non_empty_counters_array
 ;;
