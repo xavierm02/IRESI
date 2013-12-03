@@ -14,6 +14,25 @@
 
 \section{Principe de l'algorithme}
 
+	\subsection{Objectif}	
+		Cet algorithme a pour but de déterminer quels sont les éléments les plus fréquents d'un flux de données en temps 				réel, c'est à dire en temps linéaire par rapport à $m$, le nombre d'éléments du flux. Pour ce faire il n'utilise que 			$k$ compteurs, il est donc constant en complexité spatiale par rapport à $k$ et, puisque dans les faits $k \ll m$, 				l'algorithme est économe en mémoire.
+	
+	\subsection{Fonctionnement}	
+		Le fonctionnement de l'algorithme est le suivant : 
+		\begin{enumerate}
+			\item On commence par initialiser $k$ compteurs vides.
+			\item Pour chaque élément $x$ du flux: 
+				\begin{itemize}
+					\item Si il y a déjà, parmi les $k$ compteurs, un compteur associé à $x$ alors 	on incrémente ce 									compteur.
+					\item Sinon, si au moins un des $k$ compteurs est vide, on associe $x$ à l'un des compteurs vides et on 							positionne ce dernier à 1 pour compter l'élément courant du flux.
+					\item  Enfin, si les $k$ compteurs sont déjà associés à des éléments du flux tous différents de $x$, on 							décrémente tous les compteurs. Un compteur devenant nul n'est plus associé à aucun élément du flux, 							il redevient un compteur vide.
+				\end{itemize}
+			\item À la fin de la mesure, les compteurs contiennent nécessairement les valeurs les plus fréquentes du flux, 						sous certaines conditions.
+		\end{enumerate}				
+	
+	\subsection{Conditions de validité}
+		Tout élément $j$ du flux dont la fréquence a été strictement plus grande que $m/k$, où $m$ est le nombre d'éléments 			du 	flux et $k$ le nombre de compteurs utilisés, sera nécessairement présent dans l'un des compteurs à la fin de la 			mesure. Pour les éléments du flux dont la fréquence a été inférieure à $m/k$, on ne peut rien dire avec certitude 				mais plus leur fréquence était grande plus ils ont de chance de se trouver dans un compteur à la fin si le flux 				n'était pas pathologique.
+	
 \section{Implémentation OCaml}
 
 \section{Résultats}
