@@ -6,7 +6,7 @@ let file_2_2 = "../logs/2sdschttpter.txt";;
 let file_3 = "../logs/3Calgaryaccess_log.txt";;
 
 let first_word separator string =
-  (String.sub string 0 ((String.index string separator) - 1))
+  (String.sub string 0 (String.index string separator))
 ;;
 
 let enum_1 = LogEnum.make file_1 (first_word ' ');;
