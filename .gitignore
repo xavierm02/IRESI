@@ -7,3 +7,8 @@
 *.cmx
 *.cmxs
 *.cmxa
+
+*.byte
+src/_build
+output
+

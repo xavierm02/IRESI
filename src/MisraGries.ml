@@ -79,6 +79,7 @@ let read counters host =
 ;;
 
 let read_all counters host_enum =
+  Enum.reset host_enum;
   Enum.iter (read counters) host_enum
 ;;
 

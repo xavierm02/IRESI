@@ -1,0 +1,18 @@
+set term png
+set autoscale
+unset log
+unset label
+set xtic auto
+set ytic auto
+
+set xlabel "k"
+set ylabel "Number of correct elements"
+
+set output "output/graph-1.png"
+plot "output/graph-1.data"
+
+set output "output/graph-2.png"
+plot "output/graph-2.data"
+
+set output "output/graph-3.png"
+plot "output/graph-3.data"
