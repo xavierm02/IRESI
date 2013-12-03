@@ -15,6 +15,13 @@ let make key value =
   })
 ;;
 
+let compare counter1 counter2 = match counter1, counter2 with
+  | Value c1, Value c2 -> c2.value - c1.value
+  | Value _, Empty -> -1
+  | Empty, Value _ -> 1
+  | Empty, Empty -> 0
+;;
+
 let string_of_counter = function
   | Value c -> c.key ^ " -> " ^ (string_of_int c.value)
   | Empty -> "? -> 0"
@@ -86,5 +93,6 @@ let read_all counters host_enum =
 let misra_gries k host_enum =
   let counters = init k in
   read_all counters host_enum;
+  Array.sort compare counters;
   counters
 ;;
