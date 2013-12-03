@@ -1,30 +1,4 @@
-(* ici, tu fais les calcules "en vrai". Oublis pas de reset l'enum avant de commencer a la lire *)
-
-type non_empty_counter = {
-  key: string;
-  mutable value: int
-};;
-
-let make key value = {
-  key = key;
-  value = value
-};;
-
-let compare counter1 counter2 =
-  counter2.value - counter1.value
-;;
-
-let string_of_counter counter =
-  counter.key ^ " -> " ^ (string_of_int counter.value)
-;;
-
-let string_of_counters counters =
-  (Array.fold_left
-    (fun acc counter -> acc ^ "  " ^ (string_of_counter counter) ^ "\n")
-    "[\n"
-    counters
-  ) ^ "]\n"
-;;
+open Counter;;
 
 let init () =
   ref []
@@ -40,7 +14,7 @@ let read counters host =
         raise Done
       end else ()
     ) !counters;
-    counters := (make host 1) :: !counters
+    counters := ({key = host; value = 1}) :: !counters
   with
     | Done -> ()
 ;;
