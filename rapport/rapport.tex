@@ -2,20 +2,22 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
+\usepackage{listings}
+\lstset{language = Caml}
 
 \title{IRESI : Algorithme Misra-Gries}
-\author{\author{François \textsc{Godi} \and Xavier \textsc{Montillet}}}
+\author{François \textsc{Godi} \and Xavier \textsc{Montillet}}
 \date{Pour le 3 décembre 2013}
 
 \begin{document}
 	
 \maketitle
-\tableofcontents
+% \tableofcontents
 
 \section{Principe de l'algorithme}
 
 	\subsection{Objectif}	
-		Cet algorithme a pour but de déterminer quels sont les éléments les plus fréquents d'un flux de données en temps 				réel, c'est à dire en temps linéaire par rapport à $m$, le nombre d'éléments du flux. Pour ce faire il n'utilise que 			$k$ compteurs, il est donc constant en complexité spatiale par rapport à $k$ et, puisque dans les faits $k \ll m$, 				l'algorithme est économe en mémoire.
+		Cet algorithme a pour but de déterminer quels sont les éléments les plus fréquents d'un flux de données en temps 				réel, c'est à dire en temps linéaire par rapport à $m$, le nombre d'éléments du flux. Pour ce faire il n'utilise que 			$k$ compteurs et, puisque dans les faits $k \ll m$, l'algorithme est économe en mémoire.
 	
 	\subsection{Fonctionnement}	
 		Le fonctionnement de l'algorithme est le suivant : 
@@ -31,10 +33,43 @@
 		\end{enumerate}				
 	
 	\subsection{Conditions de validité}
-		Tout élément $j$ du flux dont la fréquence a été strictement plus grande que $m/k$, où $m$ est le nombre d'éléments 			du 	flux et $k$ le nombre de compteurs utilisés, sera nécessairement présent dans l'un des compteurs à la fin de la 			mesure. Pour les éléments du flux dont la fréquence a été inférieure à $m/k$, on ne peut rien dire avec certitude 				mais plus leur fréquence était grande plus ils ont de chance de se trouver dans un compteur à la fin si le flux 				n'était pas pathologique.
+		Tout élément $j$ du flux dont la fréquence a été strictement plus grande que $m/k$, où $m$ est le nombre d'éléments 			du 	flux et $k$ le nombre de compteurs utilisés, sera nécessairement présent dans l'un des compteurs à la fin de la 			mesure. Pour les éléments du flux dont la fréquence a été inférieure à $m/k$, on ne peut rien dire avec certitude 				mais, si le flux n'est pas pathologique, plus leur fréquence était grande plus ils ont de chances de se trouver dans 			l'un des compteurs à la fin .
 	
 \section{Implémentation OCaml}
-
+	
+	\subsection{Choix du langage}
+		Nous avons choisi d'implémenter cet algorithme en OCaml car nous connaissons bien ce langage et nous savions qu'il se 		prête bien à l'implémentation d'un algorithme comme celui ci. Notre code est robuste et peut toujours fonctionner si 			la nature des éléments du flux change, par exemple.
+	
+	\subsection{Choix d'implémentation}
+		Un flux d'éléments de type $\alpha$ est modélisé par un type $\alpha$ enum qui, outre une fonction d'initialisation, 			ne possède qu'une fonction \emph{next} qui renvoie l'élément suivant du flux :
+		
+		\begin{lstlisting} 
+type 'a enum =
+  {
+    reset: unit -> unit;
+    next: unit -> 'a option
+  }
+		\end{lstlisting}
+		
+		Notre itérateur permet d'effectuer un traitement quelconque pour chaque élément du flux :
+		
+		\begin{lstlisting}
+let iter f enum =
+  let rec aux () =
+    match enum.next () with
+      | Some x -> begin
+        f x;
+        aux ()
+      end
+      | None -> ()
+  in
+  aux ()
+;;
+		\end{lstlisting}
+		
+		En particulier, incrémenter et décrémenter les compteurs selon les éléments du flux. 
+		Pour plus de détails sur l'implémentation, se reporter au code source.
+		
 \section{Résultats}
 
 \end{document}
