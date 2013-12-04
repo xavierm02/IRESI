@@ -68,5 +68,5 @@ let misra_gries k host_enum =
   ) counters;
   let non_empty_counters_array = Array.of_list !non_empty_counters_list in
   Array.sort compare non_empty_counters_array;
-  non_empty_counters_array
+  non_empty_counters_array |> Array.map (fun counter -> counter.key)
 ;;

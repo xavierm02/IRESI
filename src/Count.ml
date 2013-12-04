@@ -24,10 +24,18 @@ let read_all counters host_enum =
   Enum.iter (read counters) host_enum
 ;;
 
-let count k host_enum =
+let count_all host_enum =
   let counters = init () in
   read_all counters host_enum;
   let counters_array = Array.of_list !counters in
   Array.sort compare counters_array;
-  Array.sub counters_array 0 (min k (Array.length counters_array))
+  Array.map (fun counter -> counter.key) counters_array
+;;
+
+let first_k k array =
+  Array.sub array 0 (min k (Array.length array))
+;;
+
+let count k host_enum =
+  first_k k (count_all host_enum)
 ;;

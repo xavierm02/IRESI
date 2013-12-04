@@ -4,15 +4,18 @@ unset log
 unset label
 set xtic auto
 set ytic auto
+set border 1+2 back
+
+set yrange [0:1]
 
 set xlabel "k"
 set ylabel "Number of correct elements"
 
 set output "output/graph-1.png"
-plot "output/graph-1.data"
+plot "output/graph-1.data" with line
 
 set output "output/graph-2.png"
-plot "output/graph-2.data"
+plot "output/graph-2.data" with line
 
 set output "output/graph-3.png"
-plot "output/graph-3.data"
+plot "output/graph-3.data" with line

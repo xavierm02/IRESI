@@ -1,4 +1,4 @@
-.PHONY: all graph
+.PHONY: all graph run
 
 all: graph
 
@@ -7,6 +7,8 @@ all: graph
 
 output:
 	mkdir output
+
+src/graph.byte src/main.byte: $(shell find . -type f -name '*.ml')
 
 output/graph-1.data output/graph-2.data output/graph-3.data: output
 
@@ -23,6 +25,9 @@ output/graph-1.png output/graph-2.png output/graph-3.png: src/plotter output/gra
 	gnuplot src/plotter
 
 graph: output/graph-1.png output/graph-2.png output/graph-3.png
+
+run: src/main.byte
+	ocamlrun src/main.byte
 
 clean:
 	(cd src; ocamlbuild -r -clean)

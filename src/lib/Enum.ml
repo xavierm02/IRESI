@@ -70,3 +70,10 @@ let iter f enum =
   in
   aux ()
 ;;
+
+let get_remaining_length_and_reset enum =
+  let length = ref 0 in
+  iter (fun _ -> incr length) enum;
+  reset enum;
+  !length
+;;

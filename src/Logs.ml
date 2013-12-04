@@ -1,9 +1,9 @@
 exception UnmatchedString of string;;
 
-let file_1 = "../logs/1epahttp.txt";;
-let file_2_1 = "../logs/2sdschttp.txt";;
-let file_2_2 = "../logs/2sdschttpter.txt";;
-let file_3 = "../logs/3Calgaryaccess_log.txt";;
+let file_1 = "logs/1epahttp.txt";;
+let file_2_1 = "logs/2sdschttp.txt";;
+let file_2_2 = "logs/2sdschttpter.txt";;
+let file_3 = "logs/3Calgaryaccess_log.txt";;
 
 let first_word separator string =
   (String.sub string 0 (String.index string separator))
