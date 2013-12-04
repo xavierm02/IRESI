@@ -21,9 +21,10 @@ let fincr x =
 
 let k = ref 1;;
 
-let n = Enum.get_remaining_length_and_reset enum;;
+let n = Count.count n enum |> Array.length;;
 let result_counter_global = Count.count_all enum;;
-let m = Count.count n enum |> Array.length;;
+let m = Enum.get_remaining_length_and_reset enum;;
+let m_float = m |> float_of_int;;
 
 print_string "#n = ";
 print_int n;
@@ -32,15 +33,18 @@ print_string "#m = ";
 print_int m;
 print_newline ();;
 
-let k_max = min 10000 (2*m);;
+let k_max = m;;
 
 while !k <= k_max do
   let result_mg = MisraGries.misra_gries !k enum in
   let result_counter = Count.first_k !k result_counter_global in
-  let l = intersection_size result_mg result_counter in
+  let l = intersection_size result_mg result_counter |> float_of_int in
+  let p = min !k m |> float_of_int in
   print_int !k;
   print_string " ";
-  print_float ((float_of_int l) /. (float_of_int (min !k m)));
+  print_float (l /. p);
+  print_string " ";
+  print_float (p /. m_float);
   print_newline ();
   fincr k
 done;;

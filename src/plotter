@@ -12,10 +12,13 @@ set xlabel "k"
 set ylabel "Number of correct elements"
 
 set output "output/graph-1.png"
-plot "output/graph-1.data" with line
+plot "output/graph-1.data" using 2 title 'Correct guesses / k' with line linewidth 5, \
+     "output/graph-1.data" using 3 title 'k / m' with line linewidth 5
 
 set output "output/graph-2.png"
-plot "output/graph-2.data" with line
+plot "output/graph-2.data" using 2 title 'Correct guesses / k' with line linewidth 5, \
+     "output/graph-2.data" using 3 title 'k / m' with line linewidth 5
 
 set output "output/graph-3.png"
-plot "output/graph-3.data" with line
+plot "output/graph-3.data" using 2 title 'Correct guesses / k' with line linewidth 5, \
+     "output/graph-3.data" using 3 title 'k / m' with line linewidth 5

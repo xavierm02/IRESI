@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
 \usepackage{listings}
+\usepackage{graphicx}
 \lstset{language = Caml}
 
 \title{IRESI : Algorithme Misra-Gries}
@@ -71,5 +72,23 @@ let iter f enum =
 		Pour plus de détails sur l'implémentation, se reporter au code source.
 		
 \section{Résultats}
+
+\begin{figure}[h!]
+  \caption{EPA-HTTP}
+  \centering
+    \includegraphics[scale=0.8]{../output/graph-1.png}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{SDSC-HTTP}
+  \centering
+    \includegraphics[scale=0.8]{../output/graph-2.png}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Calgary-HTTP}
+  \centering
+    \includegraphics[scale=0.8]{../output/graph-3.png}
+\end{figure}
 
 \end{document}
