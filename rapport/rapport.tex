@@ -34,7 +34,7 @@
 		\end{enumerate}				
 	
 	\subsection{Conditions de validité}
-		Tout élément $j$ du flux dont la fréquence a été strictement plus grande que $m/k$, où $m$ est le nombre d'éléments 			du 	flux et $k$ le nombre de compteurs utilisés, sera nécessairement présent dans l'un des compteurs à la fin de la 			mesure. Pour les éléments du flux dont la fréquence a été inférieure à $m/k$, on ne peut rien dire avec certitude 				mais, si le flux n'est pas pathologique, plus leur fréquence était grande plus ils ont de chances de se trouver dans 			l'un des compteurs à la fin .
+		Tout élément $j$ du flux dont l'effectif a été strictement supérieur \`a $\frac{m}{k}$, où $m$ est le nombre d'éléments 			du 	flux et $k$ le nombre de compteurs utilisés, sera nécessairement présent dans l'un des compteurs à la fin de la 			mesure. Pour les éléments du flux dont l'effectif a été inférieur ou égal à $\frac{m}{k}$, on ne peut rien dire avec certitude 				mais, si le flux n'est pas pathologique, plus leur fréquence était grande plus ils ont de chances de se trouver dans 			l'un des compteurs à la fin .
 	
 \section{Implémentation OCaml}
 	
@@ -76,19 +76,18 @@ let iter f enum =
 \begin{figure}[h!]
   \caption{EPA-HTTP}
   \centering
-    \includegraphics[scale=0.8]{../output/graph-1.png}
+    \includegraphics[scale=0.7]{../output/graph-1.png}
 \end{figure}
 
 \begin{figure}[h!]
   \caption{SDSC-HTTP}
   \centering
-    \includegraphics[scale=0.8]{../output/graph-2.png}
+    \includegraphics[scale=0.7]{../output/graph-2.png}
 \end{figure}
 
 \begin{figure}[h!]
   \caption{Calgary-HTTP}
   \centering
-    \includegraphics[scale=0.8]{../output/graph-3.png}
+    \includegraphics[scale=0.7]{../output/graph-3.png}
 \end{figure}
-
 \end{document}
